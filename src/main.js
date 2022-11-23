@@ -2,6 +2,9 @@ const express = require('express');
 const app = express();
 const port = 3000;
 
+
+app.use(express.json());
+
 app.listen(port, () => {
     console.log('服务启动成功\n正在监听数据')
 });
@@ -37,4 +40,19 @@ app.get('/posts/:postId', (req, rep) => {
     const { postId } = req.params;
     const posts = data.filter(item => item.id == postId);
     rep.send(posts[0]);
+});
+
+app.post('/posts', (req, rep) => {
+    const { content } = req.body;
+
+    rep.status('201');
+
+    console.log(req.headers['my_word']);
+
+    rep.set('user-agent', 'hahahahaha');
+
+    rep.send({
+        message: `成功创建了内容： ${content}`
+    });
+
 });
